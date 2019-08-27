@@ -2,12 +2,15 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/h7876/caginator/internal/response"
 	"net/http"
-
-	_ "github.com/h7876/caginator/internal/response"
 
 	"github.com/gorilla/mux"
 )
+
+//type Ret struct {
+//	Name string
+//}
 
 func main() {
 	r := mux.NewRouter()
