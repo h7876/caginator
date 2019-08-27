@@ -22,19 +22,24 @@ Options:
 - stop: stop cage's docker container(s)"
         ;;
         "start")
-            docker-compose up
+#            docker build --no-cache .
+#            docker-compose up --force-recreate
+            docker build --no-cache -t h7876/caginator .
+            docker run --name app-cage -p 8080:8080 h7876/caginator
             echo "STARTING cage"
         ;;
         "start-bg")
-            docker-compose up -d
+#            docker-compose up -d
+            docker build --no-cache -t h7876/caginator .
+            docker run -d -p 8080:8080 h7876/caginator
             echo "STARTING cage in background"
         ;;
         'stop')
-            echo "STOPPING cage_app"
+            echo "STOPPING cage-app"
 #            docker-compose down
-            docker stop cage_app
+            docker stop app-cage
             docker rm $(docker ps -a -q)
-            docker rmi cage_app
+            docker rmi app-cage
         ;;
         *)
             echo -e "ERROR: invalid option. Try..\n$ ${FUNCNAME} help"

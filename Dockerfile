@@ -1,11 +1,16 @@
-FROM golang:1.10
+FROM golang:1.11.0-stretch as builder
 
-WORKDIR /go/src/cage
+WORKDIR /caginator
 
-RUN go get github.com/githubnemo/CompileDaemon
+COPY . ./
 
-## This container exposes port 8080 to the outside world
-EXPOSE 8080
+# Building using -mod=vendor, which will utilize the v
+RUN CGO_ENABLED=0 GOOS=linux go build -mod=vendor -o app
 
-#ENTRYPOINT CompileDaemon -log-prefix=false -build="go build ./" -command="./cage dev"
-ENTRYPOINT CompileDaemon -log-prefix=false -build="go build -v -o -mod vendor cage-dev ./" -command="./cage-dev dev"
+FROM alpine:3.8
+
+WORKDIR /root/
+
+COPY --from=builder /caginator/app .
+
+CMD ["./app"]
