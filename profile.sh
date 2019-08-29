@@ -19,7 +19,8 @@ Options:
 - help: show this menu
 - start: launch cage's docker container(s)
 - start-bg: launch cage's docker container(s), no output
-- stop: stop cage's docker container(s)"
+- stop: stop cage's docker container(s)
+- purge: stop containers and purge all remnants"
         ;;
         "start")
             docker-compose up --force-recreate
@@ -31,6 +32,9 @@ Options:
         ;;
         'stop')
             echo "STOPPING cage-app"
+            docker-compose down
+        ;;
+        'purge')
             docker-compose down
             docker stop app-cage
             docker rm $(docker ps -a -q)
