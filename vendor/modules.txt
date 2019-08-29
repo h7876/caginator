@@ -1,2 +1,7 @@
 # github.com/gorilla/mux v1.7.3
 github.com/gorilla/mux
+# github.com/mtslzr/pokeapi-go v1.3.0
+github.com/mtslzr/pokeapi-go
+github.com/mtslzr/pokeapi-go/structs
+# github.com/patrickmn/go-cache v2.1.0+incompatible
+github.com/patrickmn/go-cache
