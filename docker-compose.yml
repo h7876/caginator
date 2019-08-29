@@ -2,7 +2,7 @@ version: '3'
 
 services:
   app:
-    container_name: "cage-app"
+    container_name: "app-cage"
     ports:
       - '8080:8080'
     build: "./"

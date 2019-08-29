@@ -1,16 +1,10 @@
-FROM golang:1.11.0-stretch as builder
+FROM golang:1.11.0-stretch
+
+RUN go get github.com/githubnemo/CompileDaemon
 
 WORKDIR /caginator
 
-COPY . ./
+EXPOSE 8080
 
-# Building using -mod=vendor, which will utilize the v
-RUN CGO_ENABLED=0 GOOS=linux go build -mod=vendor -o app
+ENTRYPOINT CompileDaemon -log-prefix=false -build="go build -mod=vendor -v -o app ./" -command="./app"
 
-FROM alpine:3.8
-
-WORKDIR /root/
-
-COPY --from=builder /caginator/app .
-
-CMD ["./app"]
