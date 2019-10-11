@@ -1,4 +1,4 @@
-FROM golang:1.11.0-stretch
+
 
 RUN go get github.com/githubnemo/CompileDaemon
 
