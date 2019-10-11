@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ############################
 # STEP 1 build executable binary
 ############################
@@ -6,6 +7,10 @@ FROM golang:1.13rc1-alpine
 # Install git.
 # Git is required for fetching the dependencies.
 RUN apk update && apk add --no-cache git
+=======
+
+
+>>>>>>> 74df6cead572672415c2e29507a62e1d3edb5a88
 RUN go get github.com/githubnemo/CompileDaemon
 # Create appuser.
 RUN adduser -D -g '' appuser
