@@ -1,41 +1,30 @@
 package main
 
 import (
-	"encoding/json"
+	_"encoding/json"
 	"github.com/h7876/caginator/internal/response"
 	"github.com/mtslzr/pokeapi-go"
 	"net/http"
-
+	"fmt"
 	"github.com/gorilla/mux"
+	"strings"
 )
-
-//type Ret struct {
-//	Name string
-//}
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		w.Header().Set("Content-Type", "application/json")
-		payload := response.Ret{
-			Name: "Charlie",
-		}
-		bytePayload, err := json.MarshalIndent(payload, "", "  ")
-		_ = err
-		w.Write(bytePayload)
-		// vars := mux.Vars(r)
-		// title := vars["title"]
-		// page := vars["page"]
-		// fmt.Fprintf(w, "You've requested the book: %s on page %s\n", title, page)
-	})
 	r.HandleFunc("/pokedex", func(w http.ResponseWriter, r *http.Request){
 		w.WriteHeader(http.StatusOK)
-		g, _ := pokeapi.Resource("pokemon")
+		g, _:= pokeapi.Resource("pokemon")
 		w.Header().Set("Content-Type", "application/json")
-		pokeByte, err:= json.MarshalIndent(g, "", "  ")
-		_= err
-		w.Write(pokeByte)
+		payload := response.Poke{
+			Name: g.Results[0].Name,
+			Url: g.Results[0].URL,
+		}
+		var name = strings.Trim(payload.Name, "\"")
+		var url= strings.Trim(payload.Url, "\"")
+
+		fmt.Fprintf(w, "<h1>%s</h1>", name)
+		fmt.Fprintf(w, "<h3>%s</h3>", url)
 	})
 	http.ListenAndServe(":8080", r)
 }
